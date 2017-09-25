@@ -3,3 +3,7 @@
 //
 
 #include "GridCheck.h"
+
+GridCheck::GridCheck() {
+
+}

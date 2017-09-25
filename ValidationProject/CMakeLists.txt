@@ -3,5 +3,5 @@ project(untitled)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp GridCheck.cpp GridCheck.h)
+set(SOURCE_FILES main.cpp GridCheck.cpp GridCheck.h ErrorObject.cpp ErrorObject.h)
 add_executable(untitled ${SOURCE_FILES})
