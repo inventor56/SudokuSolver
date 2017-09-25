@@ -13,9 +13,6 @@ using namespace std;
 
 class GridCheck {
 private:
-
-
-    //struct ErrorResults; // List of Row Numbers and Column numbers where there are errors. Also
     int **originalGrid; // The original 2D array of the (potentially) incorrect grid
     int centerRowOfGrid; // Row value of grid center
     int centerColumnOfGrid; // Column value of grid center
@@ -23,11 +20,13 @@ private:
 public:
     GridCheck();
     GridCheck(int rowCenter, int columnCenter); //Constructor
-    ~GridCheck();
-    void CheckGrid(); // Check 3x3 Grid to see if values are 1-9.
-    void CheckNumInRow(int num); // Check Row To See if the selected number works within it.
-    void CheckNumInColumn();
+    ~GridCheck(); // Destructor
+    void CheckGrid(); // First check 3x3 to see if there are any noticeable errors (either !1-9 or total != 45). Then check each number to find the error/errors
+    int CheckNumInRow(int row, int column, int number); // Check the row of a given number to see if the number fits. If so, return 0. Else 1 (error in row)
+    int CheckNumInColumn(int row, int column, int number); // Check the column of a given number to see if the number fits. If so, return 0. Else 1 (error in column)
     int * getOriginalGrid();
+    std::list<ErrorObject> getAnswers(); // Return any answers (errors and recommendations) you may have encountered.
+    void addToAnswers(ErrorObject ansObj); // Possibly use this to add answers to the list (may be able to just insert)
 
 
 
