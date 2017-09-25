@@ -30,12 +30,13 @@ void GridCheck::CheckGrid() {
 
         }
     }
+    /*
     if ( //!1-9 && total != 45) { // Break into main function checking loop!
 
     }
     else { // It's likely that the error is not within this grid, return NULL;
 
-    }
+    } */
 
 }
 
