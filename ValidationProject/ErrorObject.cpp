@@ -11,7 +11,7 @@ ErrorObject::ErrorObject(int row, int column, int answer) {
 
 }
 
-ErrorObject::~ErrorObject() {
+ErrorObject::~ErrorObject =default {
 
 }
 
