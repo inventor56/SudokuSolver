@@ -4,6 +4,6 @@
 
 #include "GridCheck.h"
 
-GridCheck::GridCheck() {
+GridCheck::GridCheck() = default;
 
-}
+GridCheck::~GridCheck() = default;
