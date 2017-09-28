@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <list>
+#include <algorithm>
 #include "GridCheck.h"
 
 using namespace std;
@@ -18,25 +19,30 @@ GridCheck::GridCheck(int rowCenter, int columnCenter) {
 
 }
 
-void GridCheck::CheckGrid() {
+bool GridCheck::CheckGrid() {
     vector <int> numberVector(9); // Create a vector of size 9 to store the numbers in.
-    int total = 0; // Total of all 9 numbers in 3x3 grid
+    typedef pair<int, int> gridArrayPair; //Pair of row and column values;
+    typedef vector<gridArrayPair> gridArrayVector; // Vector storing the relative grid array values (for instance, [3,2])
+    gridArrayVector indexValues; // Pairs of index values. Very important
+    //Should create a vector or the like to store the 9 array indices
     int tempIterate = 0; // Use an iterator instead, possibly?
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            int numAtIndex = originalArray[leftmostRowOfGrid+i][bottomColumnOfGrid+j];
-            total += numAtIndex; //  Add the number to the total
+            indexValues.emplace_back(make_pair(leftmostRowOfGrid+i,bottomColumnOfGrid+j)); //Try to optimize later perhaps?
+            int numAtIndex = originalArray[leftmostRowOfGrid+i][bottomColumnOfGrid+j]; //Try to optimize later perhaps?
             numberVector[tempIterate++] = numAtIndex; // Add the number to the vector
 
         }
     }
-    /*
-    if ( //!1-9 && total != 45) { // Break into main function checking loop!
+    //Make sure the 9 grid elements are the numbers 1-9
+    if (!CheckVectorOneNine(numberVector));
+         // Failed, turns out that the numbers in this grid are incorrect. Time for more digging
+        // Check each number in the row, one by one. Check the column at the same time
 
-    }
+        // Break into the function checking group
     else { // It's likely that the error is not within this grid, return NULL;
-
-    } */
+        return NULL;
+    }
 
 }
 
@@ -58,4 +64,17 @@ void GridCheck::addToAnswers(ErrorObject ansObj) {
 
 void GridCheck::setOriginalArray(int **arr) {
     originalArray = arr; // set the pointer to the matrix passed in as an argument
+}
+
+bool GridCheck::CheckVectorOneNine(std::vector stdVector) {
+    // Sort the number vector, creating a list with values from 1-9 if all is good
+    sort(stdVector.begin(),stdVector.end());
+    for (int i = 1; i <= stdVector.size(); i++){
+        // We need to make sure each element is
+        if (stdVector.at(i) != i) { //If a number is not following the order of 1-9
+            return false;
+        }
+    }
+    // Return true since the check has passed! It looks like the elements of the vector are definitely between 1-9
+    return true;
 }
