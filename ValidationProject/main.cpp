@@ -40,15 +40,14 @@ int main(int argc, char** argv) {
     gridCheckObj = GridCheck(readInGrid, 1,1); // Create initial grid testing object (BE SURE TO CHANGE THE row and column FOR FULL THREADING)
 
     if (gridCheckObj.checkGrid()) {
-        cout << "Well, looks like it you passed and there are no errors!" << endl;
-    }
-    else {
         cout << "Errors found!" <<endl;
         list<ErrorObject> printList = gridCheckObj.getAnswers();
         for (auto &it : printList) {
             cout << "Error found at: Row: " << it.getRow() << ". Column: " << it.getColumn() << ". The right answer is:  "<< it.getAnswer() << endl;
         }
-
+    }
+    else {
+        cout << "Well, looks like it you passed and there are no errors!" << endl;
     }
 
     return 0;

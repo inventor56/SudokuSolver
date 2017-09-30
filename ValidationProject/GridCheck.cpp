@@ -23,6 +23,7 @@ GridCheck::GridCheck(int** arr, int leftmost, int bottom) { // Something is wron
 }
 
 bool GridCheck::checkGrid() {
+    bool errorsFound = false; // This will be true in case there are any errors found (at all) during function runtime
     vector <int> numberVector(9); // Create a vector of size 9 to store the numbers in.
     gridArrayVector indexValues; // Pairs of index values. Very important
     //Should create a vector or the like to store the 9 array indices
@@ -41,34 +42,25 @@ bool GridCheck::checkGrid() {
     if (!checkVectorOneNine(numberVector)) {
         // Failed, turns out that the numbers in this grid are incorrect. Time for more digging
         // Check each number in the row, one by one. Check the column at the same time
-        // 1. Iterate through indexValues
         for (gridArrayVector::const_iterator it = indexValues.begin();
              it != indexValues.end(); it++) { // Iterate through indexValues
             // Set temporary vars to use for each grid value check
             int r = it->first;
             int c = it->second;
-            if (checkNum(r, c)) {
-                // There were errors both in the whole column, and in the whole row.
-                // This means there was an error in the grid, for this specific value in this row, and for this specific value in this column
-                // Probable Error! Add to your list
-                answerList.emplace_back(ErrorObject(r, c, originalArray[r][c])); // BEWARE OF MEMORY LEAKS HERE!!!
-
+            if(checkNum(r, c)) {
+                errorsFound = true; // Error or errors have been added to the answer list
             }
-
         }
     }
-        // Break into the function checking group
-    else { // It's likely that the error is not within this grid, return NULL;
-        return true;
-    }
 
-    return false; // You definitely have encountered errors!
+    return errorsFound;
 
 }
 
-int GridCheck::checkNum(int row, int column) { // Returns 1 if there is an error
+bool GridCheck::checkNum(int row, int column) { // Returns sum total if there is an error
     // For now, just check the whole row (problem is we will be duplicating work a ton :-/)
     // But possibly not, because you are checking for an individual number and spot!
+    bool definiteError = false;
     vector<int> rowVector (9);
     vector<int> columnVector (9);
 
@@ -77,11 +69,17 @@ int GridCheck::checkNum(int row, int column) { // Returns 1 if there is an error
         columnVector[i] = originalArray[i][column];// Same column, but the row is different (so we check horizontally)
     }
     if (!checkVectorOneNine(rowVector) && !checkVectorOneNine(columnVector)) {
-        return 1; // Looks like there was an error for both row and column, probable that there is an error
+        // Looks like there was an error for both row and column, probable that there is an error
+        // Return the sum of all numbers in the row or column (kinda hacky, try to redo later).
+        int total = 0;
+        for (int i : rowVector) {
+            total += i;
+        }
+        int possibleAnswer = 45 - (total - originalArray[row][column]);
+        answerList.emplace_back(ErrorObject(row, column, possibleAnswer)); // BEWARE OF MEMORY LEAKS HERE!!!
+        definiteError = true;
     }
-    else{
-        return 0; // Looks like there was either 1 error in either the row or column, or none at all. Unlikely there is an error
-    }
+    return definiteError;
 }
 
 
