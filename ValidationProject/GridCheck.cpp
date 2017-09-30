@@ -19,10 +19,8 @@ GridCheck::GridCheck(int rowCenter, int columnCenter) {
 
 }
 
-bool GridCheck::CheckGrid() {
+bool GridCheck::checkGrid() {
     vector <int> numberVector(9); // Create a vector of size 9 to store the numbers in.
-    typedef pair<int, int> gridArrayPair; //Pair of row and column values;
-    typedef vector<gridArrayPair> gridArrayVector; // Vector storing the relative grid array values (for instance, [3,2])
     gridArrayVector indexValues; // Pairs of index values. Very important
     //Should create a vector or the like to store the 9 array indices
     int tempIterate = 0; // Use an iterator instead, possibly?
@@ -35,10 +33,28 @@ bool GridCheck::CheckGrid() {
         }
     }
     //Make sure the 9 grid elements are the numbers 1-9
-    if (!CheckVectorOneNine(numberVector));
-         // Failed, turns out that the numbers in this grid are incorrect. Time for more digging
+    if (!checkVectorOneNine(numberVector)) {
+        // Failed, turns out that the numbers in this grid are incorrect. Time for more digging
         // Check each number in the row, one by one. Check the column at the same time
+        // 1. Iterate through indexValues
+        for (gridArrayVector::const_iterator it = indexValues.begin();
+             it != indexValues.end(); it++) { // Iterate through indexValues
+            // Set temporary vars to use for each grid value check
+            int r = it->first;
+            int c = it->second;
+            if (checkNumInRow(r, c) && checkNumInColumn(r, c)) {
+                // There were errors both in the whole column, and in the whole row.
+                // This means there was an error in the grid, for this specific value in this row, and for this specific value in this column
+                // Probable Error! Add to your list
+                answerList.emplace_back(new ErrorObject(r, c, originalArray[r][c])); // BEWARE OF MEMORY LEAKS HERE!!!
 
+            }
+            else {
+                return NULL;
+            }
+
+        }
+    }
         // Break into the function checking group
     else { // It's likely that the error is not within this grid, return NULL;
         return NULL;
@@ -46,12 +62,15 @@ bool GridCheck::CheckGrid() {
 
 }
 
-int GridCheck::CheckNumInRow(int row, int column, int number) {
+int GridCheck::checkNumInRow(int row, int column) { // Returns 1 if there is an error
+    // For now, just check the whole row (problem is we will be duplicating work a ton :-/)
+    // But possibly not, because you are checking for an individual number and spot!
 
+    return 0;
 }
 
-int GridCheck::CheckNumInColumn(int row, int column, int number) {
-
+int GridCheck::checkNumInColumn(int row, int column) { // Returns 1 if there is an error
+    return 0;
 }
 
 std::list<ErrorObject> GridCheck::getAnswers() {
@@ -66,7 +85,7 @@ void GridCheck::setOriginalArray(int **arr) {
     originalArray = arr; // set the pointer to the matrix passed in as an argument
 }
 
-bool GridCheck::CheckVectorOneNine(std::vector stdVector) {
+bool GridCheck::checkVectorOneNine(std::vector stdVector) {
     // Sort the number vector, creating a list with values from 1-9 if all is good
     sort(stdVector.begin(),stdVector.end());
     for (int i = 1; i <= stdVector.size(); i++){
@@ -78,3 +97,5 @@ bool GridCheck::CheckVectorOneNine(std::vector stdVector) {
     // Return true since the check has passed! It looks like the elements of the vector are definitely between 1-9
     return true;
 }
+
+
