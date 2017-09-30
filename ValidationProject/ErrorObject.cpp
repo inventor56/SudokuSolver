@@ -11,10 +11,6 @@ ErrorObject::ErrorObject(int row, int column, int answer) {
 
 }
 
-ErrorObject::~ErrorObject =default {
-
-}
-
 void ErrorObject::setRow(int row) {
     _row = row;
 }

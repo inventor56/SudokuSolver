@@ -42,11 +42,11 @@ bool GridCheck::checkGrid() {
             // Set temporary vars to use for each grid value check
             int r = it->first;
             int c = it->second;
-            if (checkNumInRow(r, c) && checkNumInColumn(r, c)) {
+            if (checkNum(r, c)) {
                 // There were errors both in the whole column, and in the whole row.
                 // This means there was an error in the grid, for this specific value in this row, and for this specific value in this column
                 // Probable Error! Add to your list
-                answerList.emplace_back(new ErrorObject(r, c, originalArray[r][c])); // BEWARE OF MEMORY LEAKS HERE!!!
+                answerList.emplace_back(ErrorObject(r, c, originalArray[r][c])); // BEWARE OF MEMORY LEAKS HERE!!!
 
             }
             else {
@@ -62,22 +62,26 @@ bool GridCheck::checkGrid() {
 
 }
 
-int GridCheck::checkNumInRow(int row, int column) { // Returns 1 if there is an error
+int GridCheck::checkNum(int row, int column) { // Returns 1 if there is an error
     // For now, just check the whole row (problem is we will be duplicating work a ton :-/)
     // But possibly not, because you are checking for an individual number and spot!
+    vector<int> rowVector (9);
+    vector<int> columnVector (9);
 
-    return 0;
+    for (int i = 0; i < 9; i++) {
+        rowVector[i] = originalArray[row][i]; // Same row, but the column is different (so we check horizontally)
+        columnVector[i] = originalArray[i][column];// Same column, but the row is different (so we check horizontally)
+    }
+    if (!checkVectorOneNine(rowVector) && !checkVectorOneNine(columnVector)) {
+        return 1; // Looks like there was an error for both row and column, probable that there is an error
+    }
+    else{
+        return 0; // Looks like there was either 1 error in either the row or column, or none at all. Unlikely there is an error
+    }
 }
 
-int GridCheck::checkNumInColumn(int row, int column) { // Returns 1 if there is an error
-    return 0;
-}
 
 std::list<ErrorObject> GridCheck::getAnswers() {
-
-}
-
-void GridCheck::addToAnswers(ErrorObject ansObj) {
 
 }
 
@@ -85,7 +89,7 @@ void GridCheck::setOriginalArray(int **arr) {
     originalArray = arr; // set the pointer to the matrix passed in as an argument
 }
 
-bool GridCheck::checkVectorOneNine(std::vector stdVector) {
+bool GridCheck::checkVectorOneNine(std::vector<int> stdVector) {
     // Sort the number vector, creating a list with values from 1-9 if all is good
     sort(stdVector.begin(),stdVector.end());
     for (int i = 1; i <= stdVector.size(); i++){

@@ -13,7 +13,6 @@ private:
     int _possibleAnswer;
 public:
     ErrorObject(int row, int column, int answer);
-    ~ErrorObject();
     void setRow(int row);
     int getRow();
     void setColumn(int column);
