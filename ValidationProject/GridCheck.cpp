@@ -11,12 +11,14 @@ using namespace std;
 
 GridCheck::GridCheck() = default;
 
+
+
 GridCheck::~GridCheck() = default;
 
-GridCheck::GridCheck(int rowCenter, int columnCenter) {
-    leftmostRowOfGrid = rowCenter; // Set the far left side of the array
-    bottomColumnOfGrid = columnCenter; // Set the far bottom of the array
-
+GridCheck::GridCheck(int **pointer, int leftmost, int bottom) {
+    originalArray = pointer;
+    leftmostRowOfGrid = leftmost;
+    bottomColumnOfGrid = bottom;
 }
 
 bool GridCheck::checkGrid() {

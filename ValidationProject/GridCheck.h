@@ -12,6 +12,8 @@
 
 class GridCheck {
 private:
+
+
     int ** originalArray; // The original 9x9 array
     int leftmostRowOfGrid; // Row value of grid center
     int bottomColumnOfGrid; // Column value of grid center
@@ -19,8 +21,8 @@ private:
     typedef std::vector<gridArrayPair> gridArrayVector; // Vector storing the relative grid array values (for instance, [3,2])
     std::list<ErrorObject> answerList; // Object list of errors, including the row/column position, and correct answer. Must initialize
 public:
-    GridCheck();
-    GridCheck(int rowCenter, int columnCenter); //Constructor
+    GridCheck(); // Default Constructor
+    GridCheck(int **pointer, int leftmost, int bottom); //Main Constructor
     ~GridCheck(); // Destructor
     bool checkGrid(); // First check 3x3 to see if there are any noticeable errors (either !1-9 or total != 45). Then check each number to find the error/errors
     void setOriginalArray(int ** arr);
