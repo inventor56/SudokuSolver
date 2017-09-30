@@ -52,15 +52,17 @@ bool GridCheck::checkGrid() {
 
             }
             else {
-                return NULL;
+                return true;
             }
 
         }
     }
         // Break into the function checking group
     else { // It's likely that the error is not within this grid, return NULL;
-        return NULL;
+        return true;
     }
+
+    return false; // You definitely have encountered errors!
 
 }
 

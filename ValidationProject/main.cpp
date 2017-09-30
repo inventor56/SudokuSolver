@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
     if (myFile.is_open()) {
         //Set up array during file reading (9x9 2d array)
         for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 string tempString;
                 getline(myFile, tempString, ','); // Use , as a delimiter
                 readInGrid[i][j] = stoi(tempString); // Store value in array (use C++ 11's stoi to convert string type to int type)
@@ -39,7 +39,12 @@ int main(int argc, char** argv) {
 
     // Pass pointer into GridCheck (use Correct constructor)
     gridCheckObj = GridCheck(readInGrid, 7, 7); // Create initial grid testing object (BE SURE TO CHANGE THE row and column FOR FULL THREADING)
-
+    if (gridCheckObj.checkGrid()) {
+        cout << "Well, looks like it you passed and there are no errors!" << endl;
+    }
+    else {
+        cout << "Errors found!" <<endl;
+    }
 
     return 0;
 }
