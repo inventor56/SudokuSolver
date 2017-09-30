@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 #include "GridCheck.h"
 
 using namespace std;
@@ -26,6 +25,7 @@ int main(int argc, char** argv) {
             for (int j = 0; j < 9; j++) {
                 string tempString;
                 getline(myFile, tempString, ','); // Use , as a delimiter
+                cout << tempString << endl;
                 readInGrid[i][j] = stoi(tempString); // Store value in array (use C++ 11's stoi to convert string type to int type)
             }
         }
@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
         // Error in file read, close
         return 0;
     }
-
+    cout << "We made it here" << endl;
     // Pass pointer into GridCheck (use Correct constructor)
     gridCheckObj = GridCheck(readInGrid, 7, 7); // Create initial grid testing object (BE SURE TO CHANGE THE row and column FOR FULL THREADING)
     if (gridCheckObj.checkGrid()) {

@@ -15,7 +15,7 @@ GridCheck::GridCheck() = default;
 
 GridCheck::~GridCheck() = default;
 
-GridCheck::GridCheck(int **pointer, int leftmost, int bottom) {
+GridCheck::GridCheck(int **pointer, int leftmost, int bottom) { // Something is wrong with the pointer going into here..
     originalArray = pointer;
     leftmostRowOfGrid = leftmost;
     bottomColumnOfGrid = bottom;
@@ -98,7 +98,7 @@ bool GridCheck::checkVectorOneNine(std::vector<int> stdVector) {
     sort(stdVector.begin(),stdVector.end());
     for (int i = 1; i <= stdVector.size(); i++){
         // We need to make sure each element is
-        if (stdVector.at(i) != i) { //If a number is not following the order of 1-9
+        if (stdVector.at(static_cast<unsigned long>(i)) != i) { //If a number is not following the order of 1-9
             return false;
         }
     }
