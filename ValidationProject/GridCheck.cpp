@@ -54,9 +54,6 @@ bool GridCheck::checkGrid() {
                 answerList.emplace_back(ErrorObject(r, c, originalArray[r][c])); // BEWARE OF MEMORY LEAKS HERE!!!
 
             }
-            else {
-                return true;
-            }
 
         }
     }
@@ -89,7 +86,7 @@ int GridCheck::checkNum(int row, int column) { // Returns 1 if there is an error
 
 
 std::list<ErrorObject> GridCheck::getAnswers() {
-
+    return answerList;
 }
 
 void GridCheck::setOriginalArray(int **arr) {

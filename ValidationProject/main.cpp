@@ -37,13 +37,18 @@ int main(int argc, char** argv) {
         return 0;
     }
     // Pass pointer into GridCheck (use Correct constructor)
-    gridCheckObj = GridCheck(readInGrid, 7,7); // Create initial grid testing object (BE SURE TO CHANGE THE row and column FOR FULL THREADING)
+    gridCheckObj = GridCheck(readInGrid, 1,1); // Create initial grid testing object (BE SURE TO CHANGE THE row and column FOR FULL THREADING)
 
     if (gridCheckObj.checkGrid()) {
         cout << "Well, looks like it you passed and there are no errors!" << endl;
     }
     else {
         cout << "Errors found!" <<endl;
+        list<ErrorObject> printList = gridCheckObj.getAnswers();
+        for (auto &it : printList) {
+            cout << "Error found at: Row: " << it.getRow() << ". Column: " << it.getColumn() << ". The right answer is:  "<< it.getAnswer() << endl;
+        }
+
     }
 
     return 0;
