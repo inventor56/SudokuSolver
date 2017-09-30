@@ -5,6 +5,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+#include <iostream>
 #include "GridCheck.h"
 
 using namespace std;
@@ -15,10 +16,10 @@ GridCheck::GridCheck() = default;
 
 GridCheck::~GridCheck() = default;
 
-GridCheck::GridCheck(int **pointer, int leftmost, int bottom) { // Something is wrong with the pointer going into here..
-    originalArray = pointer;
-    leftmostRowOfGrid = leftmost;
-    bottomColumnOfGrid = bottom;
+GridCheck::GridCheck(int** arr, int leftmost, int bottom) { // Something is wrong with the pointer going into here..
+    originalArray = arr;
+    leftmostRowOfGrid = leftmost-1;
+    bottomColumnOfGrid = bottom-1;
 }
 
 bool GridCheck::checkGrid() {
@@ -28,8 +29,10 @@ bool GridCheck::checkGrid() {
     int tempIterate = 0; // Use an iterator instead, possibly?
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            indexValues.emplace_back(make_pair(leftmostRowOfGrid+i,bottomColumnOfGrid+j)); //Try to optimize later perhaps?
-            int numAtIndex = originalArray[leftmostRowOfGrid+i][bottomColumnOfGrid+j]; //Try to optimize later perhaps?
+            int tempLeft = leftmostRowOfGrid+i;
+            int tempRight = bottomColumnOfGrid+j;
+            indexValues.emplace_back(make_pair(tempLeft,tempRight)); //Try to optimize later perhaps?
+            int numAtIndex = originalArray[tempLeft][tempRight]; //Try to optimize later perhaps?
             numberVector[tempIterate++] = numAtIndex; // Add the number to the vector
 
         }
@@ -98,12 +101,20 @@ bool GridCheck::checkVectorOneNine(std::vector<int> stdVector) {
     sort(stdVector.begin(),stdVector.end());
     for (int i = 1; i <= stdVector.size(); i++){
         // We need to make sure each element is
-        if (stdVector.at(static_cast<unsigned long>(i)) != i) { //If a number is not following the order of 1-9
+        if (stdVector.at(static_cast<unsigned long>(i)-1) != i) { //If a number is not following the order of 1-9
             return false;
         }
     }
     // Return true since the check has passed! It looks like the elements of the vector are definitely between 1-9
     return true;
+}
+
+void GridCheck::printArray() {
+    for (int i = 0; i < 9; i++)
+        for (int j = 0; j < 9; j++){
+            cout << originalArray[i][j] << endl;
+        }
+
 }
 
 
