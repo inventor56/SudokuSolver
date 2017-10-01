@@ -1,8 +1,12 @@
 #include <iostream>
 #include <fstream>
 #include "GridCheck.h"
+#include "ErrorObject.h"
+#include <pthread.h>
 
 using namespace std;
+
+#define NUM_THREADS = 9; // You will be running 9 threads within this program. One thread per each 3x3 grid section (9 total)
 
 int main(int argc, char** argv) {
 
@@ -36,6 +40,12 @@ int main(int argc, char** argv) {
         cout << "Could not read file " << endl;
         return 0;
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //                                      Main functionality below
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     // Pass pointer into GridCheck (use Correct constructor)
     gridCheckObj = GridCheck(readInGrid, 1,1); // Create initial grid testing object (BE SURE TO CHANGE THE row and column FOR FULL THREADING)
 
@@ -51,4 +61,12 @@ int main(int argc, char** argv) {
     }
 
     return 0;
+}
+
+void *check_grid_3x3(void * param) {
+    // Make new Grid Check Object
+    // Check Grid
+    // maybe use a Mutex, make sure you can insert answers into your own answers list here
+    // Exit!
+
 }
