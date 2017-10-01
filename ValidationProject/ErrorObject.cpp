@@ -5,8 +5,8 @@
 #include "ErrorObject.h"
 
 ErrorObject::ErrorObject(int row, int column, int answer) {
-    _row = row;
-    _column = column;
+    _row = row + 1; // Adding a 1 for user readability (corresponds to a 1-based row)
+    _column = column + 1; // Adding a 1 for user readability (corresponds to a 1-based column)
     _possibleAnswer = answer;
 
 }

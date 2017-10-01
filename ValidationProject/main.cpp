@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
 #include "GridCheck.h"
-#include "ErrorObject.h"
-#include <pthread.h>
 
 using namespace std;
 
@@ -116,6 +114,19 @@ int main(int argc, char** argv) {
             exit(-1);
         }
     }
+
+    // Join all threads: Making sure that all have completed before continuing onwards
+
+    pthread_join(threads[0], nullptr);
+    pthread_join(threads[1], nullptr);
+    pthread_join(threads[2], nullptr);
+    pthread_join(threads[3], nullptr);
+    pthread_join(threads[4], nullptr);
+    pthread_join(threads[5], nullptr);
+    pthread_join(threads[6], nullptr);
+    pthread_join(threads[7], nullptr);
+    pthread_join(threads[8], nullptr);
+
     // All threads are complete
 
     if (!totalErrors.empty()) {
@@ -126,22 +137,6 @@ int main(int argc, char** argv) {
     else {
         cout << "Well, looks like it you passed and there are no errors!" << endl;
     }
-
-
-    // Pass pointer into GridCheck (use Correct constructor)
-    /* Old Code
-    gridCheckObj = GridCheck(readInGrid, 1,1); // Create initial grid testing object (BE SURE TO CHANGE THE row and column FOR FULL THREADING)
-
-    if (gridCheckObj.checkGrid()) {
-        cout << "Errors found!" <<endl;
-        list<ErrorObject> printList = gridCheckObj.getAnswers();
-        for (auto &it : printList) {
-            cout << "Error found at: Row: " << it.getRow() << ". Column: " << it.getColumn() << ". The right answer is:  "<< it.getAnswer() << endl;
-        }
-    }
-    else {
-        cout << "Well, looks like it you passed and there are no errors!" << endl;
-    } */
 
     return 0;
 }
