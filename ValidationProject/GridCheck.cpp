@@ -75,15 +75,8 @@ bool GridCheck::checkNum(int row, int column) { // Returns sum total if there is
         columnVector[i] = originalArray[i][column];// Same column, but the row is different (so we check horizontally)
     }
     if (!checkVectorOneNine(rowVector) && !checkVectorOneNine(columnVector)) {
-        // Looks like there was an error for both row and column, probable that there is an error
-        // Return the sum of all numbers in the row or column (kinda hacky, try to redo later).
-        /*
-        int total = 0;
-        for (int i : rowVector) {
-            total += i;
-        } */
-        // Error below
-        //int possibleAnswer = 45 - (total - originalArray[row][column]);
+
+        // Save the error area! (Row and Column)
         answerList.emplace_back(ErrorObject(row, column)); // Add Error Object to list, but don't look for the solution quite yet
         definiteError = true;
     }

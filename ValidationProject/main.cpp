@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "GridCheck.h"
+#include "AnswerClass.h"
 
 using namespace std;
 
@@ -33,41 +34,6 @@ void *check_grid_3x3(void * param) {
     // Exit!
     pthread_exit(nullptr);
 
-
-}
-
-void findAnswers() {
-    // Find the answers.
-    // Check each object against the others.
-    for (auto &objectToLookAt : totalErrors) {
-        bool avoidRow = false;
-        bool avoidColumn = false;
-
-        // If the object shares the same row or column, take a note of that.
-        for (auto &objectsToCheckAgainst : totalErrors) {
-            if (&objectToLookAt !=
-                &objectsToCheckAgainst) { // May be an issue here! You need to be sure you are comparing the objects correctly
-                if (objectToLookAt.getRow() == objectsToCheckAgainst.getRow()) {
-                    avoidRow = true;
-                }
-                if (objectToLookAt.getColumn() == objectsToCheckAgainst.getColumn()) {
-                    avoidColumn = true;
-                }
-            }
-        }
-
-        // Then hop into whichever check doesn't share a spot with the others
-        // Check is complete, see if you have the opportunity to check another row or column for the correct solution
-        if (!avoidRow || !avoidColumn) {
-
-
-        }
-        // Set answer to impossible to "Difficult to solve in current grid state
-
-
-
-    }
-    // Check either the row, column, or grid, depending on where the other objects lie, set the error object
 
 }
 
@@ -122,8 +88,7 @@ int main(int argc, char** argv) {
             for (int j = 0; j < 9; j++) {
                 string tempString;
                 getline(myFile, tempString, ','); // Use , as a delimiter
-                readInGrid[i][j] = stoi(
-                        tempString); // Store value in array (use C++ 11's stoi to convert string type to int type)
+                readInGrid[i][j] = stoi(tempString); // Store value in array (use C++ 11's stoi to convert string type to int type)
             }
         }
 
@@ -160,6 +125,9 @@ int main(int argc, char** argv) {
     // All threads are complete
 
     if (!totalErrors.empty()) {
+        // Run the static class to find the correct answers
+        AnswerClass::findAnswer(readInGrid, totalErrors);
+        // Iterate through the new list and
         for (auto &it : totalErrors) {
             cout << "Error found at: Row: " << it.getRow() << ". Column: " << it.getColumn() << ". The right answer is:  "<< it.getAnswer() << endl;
         }
