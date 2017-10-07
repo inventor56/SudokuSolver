@@ -53,6 +53,11 @@ bool GridCheck::checkGrid() {
         }
     }
 
+    // If errors are found, jump into this part (where solutions for each of the errors are entered into the error objects
+    if (errorsFound) {
+
+    }
+
     return errorsFound;
 
 }
@@ -64,6 +69,7 @@ bool GridCheck::checkNum(int row, int column) { // Returns sum total if there is
     vector<int> rowVector (9);
     vector<int> columnVector (9);
 
+    // Set the row where the number is, and set the column as well
     for (int i = 0; i < 9; i++) {
         rowVector[i] = originalArray[row][i]; // Same row, but the column is different (so we check horizontally)
         columnVector[i] = originalArray[i][column];// Same column, but the row is different (so we check horizontally)
@@ -71,14 +77,17 @@ bool GridCheck::checkNum(int row, int column) { // Returns sum total if there is
     if (!checkVectorOneNine(rowVector) && !checkVectorOneNine(columnVector)) {
         // Looks like there was an error for both row and column, probable that there is an error
         // Return the sum of all numbers in the row or column (kinda hacky, try to redo later).
+        /*
         int total = 0;
         for (int i : rowVector) {
             total += i;
-        }
-        int possibleAnswer = 45 - (total - originalArray[row][column]);
-        answerList.emplace_back(ErrorObject(row, column, possibleAnswer)); // BEWARE OF MEMORY LEAKS HERE!!!
+        } */
+        // Error below
+        //int possibleAnswer = 45 - (total - originalArray[row][column]);
+        answerList.emplace_back(ErrorObject(row, column)); // Add Error Object to list, but don't look for the solution quite yet
         definiteError = true;
     }
+
     return definiteError;
 }
 
@@ -95,7 +104,7 @@ bool GridCheck::checkVectorOneNine(std::vector<int> stdVector) {
     // Sort the number vector, creating a list with values from 1-9 if all is good
     sort(stdVector.begin(),stdVector.end());
     for (int i = 1; i <= stdVector.size(); i++){
-        // We need to make sure each element is
+        // Error below
         if (stdVector.at(static_cast<unsigned long>(i)-1) != i) { //If a number is not following the order of 1-9
             return false;
         }
@@ -111,5 +120,7 @@ void GridCheck::printArray() {
         }
 
 }
+
+
 
 

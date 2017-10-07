@@ -36,6 +36,41 @@ void *check_grid_3x3(void * param) {
 
 }
 
+void findAnswers() {
+    // Find the answers.
+    // Check each object against the others.
+    for (auto &objectToLookAt : totalErrors) {
+        bool avoidRow = false;
+        bool avoidColumn = false;
+
+        // If the object shares the same row or column, take a note of that.
+        for (auto &objectsToCheckAgainst : totalErrors) {
+            if (&objectToLookAt !=
+                &objectsToCheckAgainst) { // May be an issue here! You need to be sure you are comparing the objects correctly
+                if (objectToLookAt.getRow() == objectsToCheckAgainst.getRow()) {
+                    avoidRow = true;
+                }
+                if (objectToLookAt.getColumn() == objectsToCheckAgainst.getColumn()) {
+                    avoidColumn = true;
+                }
+            }
+        }
+
+        // Then hop into whichever check doesn't share a spot with the others
+        // Check is complete, see if you have the opportunity to check another row or column for the correct solution
+        if (!avoidRow || !avoidColumn) {
+
+
+        }
+        // Set answer to impossible to "Difficult to solve in current grid state
+
+
+
+    }
+    // Check either the row, column, or grid, depending on where the other objects lie, set the error object
+
+}
+
 
 int main(int argc, char** argv) {
 
@@ -117,15 +152,10 @@ int main(int argc, char** argv) {
 
     // Join all threads: Making sure that all have completed before continuing onwards
 
-    pthread_join(threads[0], nullptr);
-    pthread_join(threads[1], nullptr);
-    pthread_join(threads[2], nullptr);
-    pthread_join(threads[3], nullptr);
-    pthread_join(threads[4], nullptr);
-    pthread_join(threads[5], nullptr);
-    pthread_join(threads[6], nullptr);
-    pthread_join(threads[7], nullptr);
-    pthread_join(threads[8], nullptr);
+    for (int a = 0 ; a < NUM_THREADS; a++){
+        pthread_join(threads[a], nullptr); // Join threads
+    }
+
 
     // All threads are complete
 

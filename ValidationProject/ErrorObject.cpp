@@ -11,6 +11,12 @@ ErrorObject::ErrorObject(int row, int column, int answer) {
 
 }
 
+ErrorObject::ErrorObject(int row, int column) {
+    _row = row + 1; // Adding a 1 for user readability (corresponds to a 1-based row)
+    _column = column + 1; // Adding a 1 for user readability (corresponds to a 1-based column)
+
+}
+
 void ErrorObject::setRow(int row) {
     _row = row;
 }
