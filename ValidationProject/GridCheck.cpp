@@ -38,8 +38,11 @@ bool GridCheck::checkGrid() {
 
         }
     }
+
+
     //Make sure the 9 grid elements are the numbers 1-9
     if (!checkVectorOneNine(numberVector)) {
+        cout << "\nThread:\nALERT! A 3x3 grid for a thread does not include the numbers 1-9" << endl;
         // Failed, turns out that the numbers in this grid are incorrect. Time for more digging
         // Check each number in the row, one by one. Check the column at the same time
         for (gridArrayVector::const_iterator it = indexValues.begin();
@@ -48,6 +51,7 @@ bool GridCheck::checkGrid() {
             int r = it->first;
             int c = it->second;
             if(checkNum(r, c)) {
+
                 errorsFound = true; // Error or errors have been added to the answer list
             }
         }
@@ -75,9 +79,12 @@ bool GridCheck::checkNum(int row, int column) { // Returns sum total if there is
         columnVector[i] = originalArray[i][column];// Same column, but the row is different (so we check horizontally)
     }
     if (!checkVectorOneNine(rowVector) && !checkVectorOneNine(columnVector)) {
+        cout << "-- We have now discovered an error for a value at row " << row+1 << ", column " << column+1 << endl;
 
         // Save the error area! (Row and Column)
         answerList.emplace_back(ErrorObject(row, column)); // Add Error Object to list, but don't look for the solution quite yet
+
+        cout << "-- Adding an error object to a local list of errors!" << endl;
         definiteError = true;
     }
 
@@ -89,11 +96,8 @@ std::list<ErrorObject> GridCheck::getAnswers() {
     return answerList;
 }
 
-void GridCheck::setOriginalArray(int **arr) {
-    originalArray = arr; // set the pointer to the matrix passed in as an argument
-}
-
 bool GridCheck::checkVectorOneNine(std::vector<int> stdVector) {
+
     // Sort the number vector, creating a list with values from 1-9 if all is good
     sort(stdVector.begin(),stdVector.end());
     for (int i = 1; i <= stdVector.size(); i++){
@@ -104,14 +108,6 @@ bool GridCheck::checkVectorOneNine(std::vector<int> stdVector) {
     }
     // Return true since the check has passed! It looks like the elements of the vector are definitely between 1-9
     return true;
-}
-
-void GridCheck::printArray() {
-    for (int i = 0; i < 9; i++)
-        for (int j = 0; j < 9; j++){
-            cout << originalArray[i][j] << endl;
-        }
-
 }
 
 

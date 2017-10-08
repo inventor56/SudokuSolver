@@ -27,10 +27,9 @@ void *check_grid_3x3(void * param) {
     // Check Grid
     if(gridCheckObj.checkGrid()) {
         //insert at end of main list
-        totalErrors.splice(totalErrors.end(),gridCheckObj.getAnswers()); // Try this one out to see if works. If not, check bookmark
-        //may need to manage access to list here (you don't know if another thread will be accessing it at the same time)
+        totalErrors.splice(totalErrors.end(),gridCheckObj.getAnswers());
     }
-    // maybe use a Mutex, make sure you can insert answers into your own answers list here
+
     // Exit!
     pthread_exit(nullptr);
 
@@ -39,7 +38,7 @@ void *check_grid_3x3(void * param) {
 
 
 int main(int argc, char** argv) {
-
+    cout << "-- Thread 1 Created (i.e. main method)" << endl;
     // Set up threads
     pthread_t threads[NUM_THREADS]; // The 9 threads
 
@@ -48,6 +47,8 @@ int main(int argc, char** argv) {
     for (int i = 0; i < 9; i++) {
         readInGrid[i] = new int[9];
     }
+
+    cout << "-- Empty 9x9 grid created" << endl;
 
 
     middleValues midVals[9]; // Array of nine middle values. Set the 9x9 grid pointer below
@@ -61,6 +62,14 @@ int main(int argc, char** argv) {
     midVals[1].column = midVals[3].row = midVals[4].row = midVals[4].column = midVals[5].row = midVals[7].column = 4;
     midVals[2].column = midVals[5].column = midVals[6].row = midVals[7].row = midVals[8].row = midVals[8].column = 7;
 
+    cout << "-- Center of each 3x3 grid (of 9) initialized" << endl;
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //                                      Read in Grid
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     string fileName;
     //Get the user's file name
@@ -77,6 +86,7 @@ int main(int argc, char** argv) {
                 readInGrid[i][j] = stoi(tempString); // Store value in array (use C++ 11's stoi to convert string type to int type)
             }
         }
+        cout << "-- File successfully read in by the program" << endl;
 
         myFile.close();
     }
@@ -94,7 +104,9 @@ int main(int argc, char** argv) {
 
     for (int i = 0; i < NUM_THREADS; i++) {
         tid = pthread_create(&threads[i], nullptr, check_grid_3x3, (void *) &midVals[i]);
+        cout <<  "-- Thread " << i+2 << " Created" << endl;
 
+        // Check for threading errors
         if (tid) {
             cout << "Error: Problem creating thread," << tid << endl;
             exit(-1);
@@ -103,23 +115,24 @@ int main(int argc, char** argv) {
 
     // Join all threads: Making sure that all have completed before continuing onwards
 
-    for (int a = 0 ; a < NUM_THREADS; a++){
-        pthread_join(threads[a], nullptr); // Join threads
+    for (unsigned long thread : threads) {
+        pthread_join(thread, nullptr); // Join threads
     }
-
-
     // All threads are complete
+    cout << "\nAll threads have completed execution and have joined with the main thread" << endl;
 
     if (!totalErrors.empty()) {
         // Run the static class to find the correct answers
+        cout << "\nNow we will run a method to check each error section (row/column) and determine the correct answer" << endl;
         totalErrors = AnswerClass::findAnswer(readInGrid, totalErrors); // Change your total error list to have the correct answers
+        cout << "\nHere are the final results:" << endl;
         // Iterate through the new list and
         for (auto &it : totalErrors) {
             cout << "Error found at: Row: " << it.getRowOneBase() << ". Column: " << it.getColumnOneBase() << ". The right answer is: "<< it.getAnswer() << endl;
         }
     }
     else {
-        cout << "Well, looks like it you passed and there are no errors!" << endl;
+        cout << "Well, the Sudoku puzzle has passed and there are no errors!" << endl;
     }
 
     return 0;

@@ -24,12 +24,9 @@ public:
     GridCheck(int** arr, int leftmost, int bottom); //Main Constructor
     ~GridCheck(); // Destructor
     bool checkGrid(); // First check 3x3 to see if there are any noticeable errors (either !1-9 or total != 45). Then check each number to find the error/errors
-    void setOriginalArray(int ** arr);
     bool checkNum(int row, int column); // Check the row of a given number to see if the number fits. Returns true if an error is detected
     bool checkVectorOneNine(std::vector<int> stdVector); // Check if a given vector (of size 9) has the elements one through nine within it O(N) runtime
-    std::vector<int>  getNumbersInRowOrColumn; // Return a vector listing the 9 numbers within a row or column.
     std::list<ErrorObject> getAnswers(); // Return any answers (errors and recommendations) you may have encountered.
-    void printArray(); // for testing purposes
 
 };
 

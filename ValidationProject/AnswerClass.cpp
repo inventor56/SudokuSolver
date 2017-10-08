@@ -11,7 +11,7 @@ using namespace std;
 list<ErrorObject> AnswerClass::findAnswer(int **arr, list<ErrorObject> errorList) {
     // Find the answers.
     // Check each object against the others.
-
+    cout << "-- Now comparing each item in the total error list, making sure we won't check for the right answer with the wrong algorithm" << endl;
     if (errorList.size() == 1) { // Only one object
         errorList.front().setAnswer(checkRowOrColumn(0, arr, errorList.front()));
         return errorList;
@@ -69,6 +69,7 @@ int AnswerClass::checkRowOrColumn(int version, int** array, ErrorObject errorObj
             areaVector[i] = array[i][errorObj.getColumn()];// Same column, but the row is different (so we check horizontally)
         }
     }
+    cout << "-- Removing the erroneous number to create a 'blank' sudoku box" << endl;
     // Go through vector and remove the error, previous checks will show that there are 9 numbers, with only 1 error
     for (auto it = areaVector.begin(); it != areaVector.end(); ++it) {
 
@@ -78,7 +79,7 @@ int AnswerClass::checkRowOrColumn(int version, int** array, ErrorObject errorObj
             break;
         }
     }
-
+    cout << "-- Solving for the empty box (i.e. what number is missing from the list of 8 correct numbers?)" << endl;
     // Find the number for the missing blank
     for (int a = 1; a <= 9; a++) {
         vector<int>::iterator it;
