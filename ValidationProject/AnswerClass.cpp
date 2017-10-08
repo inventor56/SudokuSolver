@@ -27,7 +27,7 @@ list<ErrorObject> AnswerClass::findAnswer(int **arr, list<ErrorObject> errorList
 
         for (auto &objectsToCheckAgainst : errorList) {
             if (&objectToLookAt !=
-                &objectsToCheckAgainst) { // May be an issue here! You need to be sure you are comparing the objects correctly
+                &objectsToCheckAgainst) { // You need to be sure you are comparing the objects correctly
                 if (objectToLookAt.getRow() == objectsToCheckAgainst.getRow()) {
                     avoidRow = true;
                 }
@@ -36,7 +36,6 @@ list<ErrorObject> AnswerClass::findAnswer(int **arr, list<ErrorObject> errorList
                 }
             }
         }
-
 
         // Then hop into whichever check doesn't share a spot with the others
         // Check is complete, see if you have the opportunity to check another row or column for the correct solution
@@ -57,7 +56,7 @@ list<ErrorObject> AnswerClass::findAnswer(int **arr, list<ErrorObject> errorList
 
     }
 
-    return std::list<ErrorObject>();
+    return errorList;
 }
 
 int AnswerClass::checkRowOrColumn(int version, int** array, ErrorObject errorObj) {
