@@ -46,7 +46,7 @@ list<ErrorObject> AnswerClass::findAnswer(int **arr, list<ErrorObject> errorList
         else if (!avoidColumn && avoidRow) {
             objectToLookAt.setAnswer(checkRowOrColumn(1, arr, objectToLookAt));
         }
-        else if (!avoidColumn && !avoidRow) {
+        else if (!avoidColumn) {
             objectToLookAt.setAnswer(checkRowOrColumn(0, arr, objectToLookAt));
         }
         else {

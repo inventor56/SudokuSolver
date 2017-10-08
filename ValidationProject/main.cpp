@@ -50,30 +50,16 @@ int main(int argc, char** argv) {
     }
 
 
-    middleValues nineMiddleValues[9]; // Array of nine middle values. Set the 9x9 grid pointer below
+    middleValues midVals[9]; // Array of nine middle values. Set the 9x9 grid pointer below
     //Set the array pointer into your struct (to pass into each thread)
-    for (int i = 0; i < 9; i++) {
-        nineMiddleValues[i].arr = readInGrid;
+    for (auto &midVal : midVals) {
+        midVal.arr = readInGrid;
     }
-    // Set the row/column values (Need to find a better way to do this. This looks very messy
-    nineMiddleValues[0].row = 1;
-    nineMiddleValues[0].column = 1;
-    nineMiddleValues[1].row = 1;
-    nineMiddleValues[1].column = 4;
-    nineMiddleValues[2].row = 1;
-    nineMiddleValues[2].column = 7;
-    nineMiddleValues[3].row = 4;
-    nineMiddleValues[3].column = 1;
-    nineMiddleValues[4].row = 4;
-    nineMiddleValues[4].column = 4;
-    nineMiddleValues[5].row = 4;
-    nineMiddleValues[5].column = 7;
-    nineMiddleValues[6].row = 7;
-    nineMiddleValues[6].column = 1;
-    nineMiddleValues[7].row = 7;
-    nineMiddleValues[7].column = 4;
-    nineMiddleValues[8].row = 7;
-    nineMiddleValues[8].column = 7;
+
+    // Set the row/column values
+    midVals[0].row = midVals[0].column = midVals[1].row = midVals[2].row = midVals[3].column = midVals[6].column = 1;
+    midVals[1].column = midVals[3].row = midVals[4].row = midVals[4].column = midVals[5].row = midVals[7].column = 4;
+    midVals[2].column = midVals[5].column = midVals[6].row = midVals[7].row = midVals[8].row = midVals[8].column = 7;
 
 
     string fileName;
@@ -107,7 +93,7 @@ int main(int argc, char** argv) {
     int tid;
 
     for (int i = 0; i < NUM_THREADS; i++) {
-        tid = pthread_create(&threads[i], nullptr, check_grid_3x3, (void *) &nineMiddleValues[i]);
+        tid = pthread_create(&threads[i], nullptr, check_grid_3x3, (void *) &midVals[i]);
 
         if (tid) {
             cout << "Error: Problem creating thread," << tid << endl;
