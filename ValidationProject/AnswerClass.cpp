@@ -69,8 +69,7 @@ list<ErrorObject> AnswerClass::findAnswer(int **arr, list<ErrorObject> errorList
 
 int AnswerClass::checkRowOrColumn(int version, int** array, ErrorObject errorObj) {
 
-    vector<int> areaVector (9); // Set this to be either the row or column vector
-    cout << "Here is the answer in object" << errorObj.getAnswer() << endl;
+    vector<int> areaVector (9); // Set this to be either the row or column vector (set to size nine to avoid errors)
     for (int i = 0; i < 9; i++) {
         if(version == 0) {
             areaVector[i] = array[errorObj.getRow()][i]; // Same row, but the column is different (so we check horizontally)
@@ -79,24 +78,52 @@ int AnswerClass::checkRowOrColumn(int version, int** array, ErrorObject errorObj
             areaVector[i] = array[i][errorObj.getColumn()];// Same column, but the row is different (so we check horizontally)
         }
     }
+
+    // Make a vector of the correct numbers
+    vector<int> numbersToCheckAgainst (9);
+    for (int a = 1; a <= numbersToCheckAgainst.size(); a++) {
+        numbersToCheckAgainst.push_back(a);
+    }
+
     // Go through vector and remove the error, previous checks will show that there are 9 numbers, with only 1 error
+
+    bool isFound = false;
     for (auto it = areaVector.begin(); it != areaVector.end(); ++it) {
-        if (*it == array[errorObj.getRow()][errorObj.getColumn()]) {
+
+        if (*it == array[errorObj.getRow()][errorObj.getColumn()] && !isFound) {
             //Erase the wrong number from this temp checking vector
-            areaVector.erase(it);
-            break;
+            //areaVector.erase(it);
+            isFound = true;
+        }
+        else {
+            numbersToCheckAgainst.erase(it);
         }
     }
 
+    for (int &it : areaVector)
+        cout << it << endl;
+
+    return 1;
+    /* no longer need to sort, replace with just a new vector to compare in the underneath loop
     // Now sort and solve for the correct answer
     sort(areaVector.begin(),areaVector.end());
-    for (int i = 1; i <= areaVector.size(); i++){
-        if (areaVector.at(static_cast<unsigned long>(i)-1) != i) {
-            // This is the correct answer, because we could not find it in the sorted list, it's the missing link
-            cout << "Here is the answer in object" << errorObj.getAnswer() << endl;
+    for (auto it = areaVector.begin(); it != areaVector.end(); ++it)
+        cout << *it << endl;
+    */
+    /*
+    // Make a vector of the correct numbers
+    vector<int> numbersToCheckAgainst (9);
+    for (int a = 1; a <= numbersToCheckAgainst.size(); a++) {
+        numbersToCheckAgainst.push_back(a);
+    }
+
+    // possibly the main bug lies within this bottom function
+    for (auto it : areaVector){
+        if (*it ) {
+            //cout << "Here is the answer in object" << errorObj.getAnswer() << endl;
             return i;
         }
-    }
+    } */
     // Return true since the check has passed! It looks like the elements of the vector are definitely between 1-9
     //return true
 }

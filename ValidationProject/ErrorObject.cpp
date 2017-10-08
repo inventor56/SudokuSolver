@@ -5,15 +5,15 @@
 #include "ErrorObject.h"
 
 ErrorObject::ErrorObject(int row, int column, int answer) {
-    _row = row + 1; // Adding a 1 for user readability (corresponds to a 1-based row)
-    _column = column + 1; // Adding a 1 for user readability (corresponds to a 1-based column)
+    _row = row; // Adding a 1 for user readability (corresponds to a 1-based row)
+    _column = column; // Adding a 1 for user readability (corresponds to a 1-based column)
     _possibleAnswer = answer;
 
 }
 
 ErrorObject::ErrorObject(int row, int column) {
-    _row = row + 1; // Adding a 1 for user readability (corresponds to a 1-based row)
-    _column = column + 1; // Adding a 1 for user readability (corresponds to a 1-based column)
+    _row = row; //
+    _column = column; //
 
 }
 
@@ -39,4 +39,12 @@ void ErrorObject::setAnswer(int answer) {
 
 int ErrorObject::getAnswer() {
     return _possibleAnswer;
+}
+
+int ErrorObject::getRowOneBase() {
+    return _row + 1;
+}
+
+int ErrorObject::getColumnOneBase() {
+    return _column + 1;
 }

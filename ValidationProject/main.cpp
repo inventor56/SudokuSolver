@@ -129,7 +129,7 @@ int main(int argc, char** argv) {
         AnswerClass::findAnswer(readInGrid, totalErrors);
         // Iterate through the new list and
         for (auto &it : totalErrors) {
-            cout << "Error found at: Row: " << it.getRow() << ". Column: " << it.getColumn() << ". The right answer is:  "<< it.getAnswer() << endl;
+            cout << "Error found at: Row: " << it.getRowOneBase() << ". Column: " << it.getColumnOneBase() << ". The right answer is:  "<< it.getAnswer() << endl;
         }
     }
     else {

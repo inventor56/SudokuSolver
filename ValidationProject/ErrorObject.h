@@ -20,6 +20,8 @@ public:
     int getColumn();
     void setAnswer(int answer);
     int getAnswer();
+    int getRowOneBase(); // Return the one based answer
+    int getColumnOneBase(); // Return the one based answer
 
 
 
