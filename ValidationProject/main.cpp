@@ -126,10 +126,10 @@ int main(int argc, char** argv) {
 
     if (!totalErrors.empty()) {
         // Run the static class to find the correct answers
-        AnswerClass::findAnswer(readInGrid, totalErrors);
+        totalErrors = AnswerClass::findAnswer(readInGrid, totalErrors); // Change your total error list to have the correct answers
         // Iterate through the new list and
         for (auto &it : totalErrors) {
-            cout << "Error found at: Row: " << it.getRowOneBase() << ". Column: " << it.getColumnOneBase() << ". The right answer is:  "<< it.getAnswer() << endl;
+            cout << "Error found at: Row: " << it.getRowOneBase() << ". Column: " << it.getColumnOneBase() << ". The right answer is: "<< it.getAnswer() << endl;
         }
     }
     else {
