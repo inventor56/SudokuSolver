@@ -1,2 +1,4 @@
 - File SVPExecutable is for execution on a Linux system with support for POSIX Threading. 
 - Will not run on a Windows machine unless a subsystem is installed
+- Navigate to executable location within terminal, then type ./SVPExecutable
+- Program will ask for a test file. I've included them within the folder, so typing in the name of the test (with the appropriate .txt) extension will suffice
